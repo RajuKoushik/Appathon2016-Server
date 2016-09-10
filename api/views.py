@@ -115,7 +115,7 @@ def addpost(request):
     else:
         return functions.invalid_option()
 
-def wep(request):
+def catpost(request):
     if request.method == 'POST':
         user_name = request.POST.get('user_name')
         post_catid = request.POST.get('post_catid')
@@ -144,7 +144,6 @@ def wep(request):
         return resp.respond()
     else:
         return functions.invalid_option()
-
 
 
 
