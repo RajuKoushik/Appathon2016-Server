@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 import json
 from django.views.decorators.csrf import csrf_exempt
-rom . import functions
+from . import functions
 from .models import *
 
 
