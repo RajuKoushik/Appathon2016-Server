@@ -118,36 +118,34 @@ def addpost(request):
 def wep(request):
     if request.method == 'POST':
         user_name = request.POST.get('user_name')
-        password = request.POST.get('password')
-        user = User.objects.filter(user_name=user_name, password=password)
-        if len(user) == 1:
-            resp = functions.Response()
-            cuser = user[0]
+        post_catid = request.POST.get('post_catid')
+        post = Post.objects.filter(post_catid=post_catid)
 
-            resp.add('firstname', cuser.first_name)
-            resp.add('lastname', cuser.last_name)
-            resp.add('email', cuser.email)
-            resp.add('user_name', cuser.user_name)
-            posts = Post.objects.all()
-            postitles = []
-            posttexts = []
-            postvotes = []
 
-            counter = 0
-            for i in posts:
-                postitles[counter] = i.post_name
-                posttexts[counter] = i.post_text
-                postvotes[counter] = i.post_votes
-                counter = counter + 1
-            resp.add('posttitles', postitles)
-            resp.add('postexts', posttexts)
-            resp.add('postvotes', postvotes)
-            return resp.respond()
+        resp = functions.Response()
 
-        else:
-            return functions.auth_failed()
+
+
+        resp.add('user_name', user_name)
+
+        postitles = []
+        posttexts = []
+        postvotes = []
+
+        counter = 0
+        for i in post:
+            postitles[counter] = i.post_name
+            posttexts[counter] = i.post_text
+            postvotes[counter] = i.post_votes
+            counter = counter + 1
+        resp.add('posttitles', postitles)
+        resp.add('postexts', posttexts)
+        resp.add('postvotes', postvotes)
+        return resp.respond()
     else:
         return functions.invalid_option()
+
+
 
 
 
