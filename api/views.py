@@ -21,17 +21,18 @@ def register(request):
         user_name = request.POST.get('user_name') # None default if no second param
         password = request.POST.get('password')
         email = request.POST.get('email')
+        age = request.POST.get('age')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        age = request.POST.get('age')
+
         try:
             user = User(user_name = user_name, password = password, email=email,
                     first_name = first_name, last_name = last_name, age = age)
             user.save()
-            uid = user.id
+
             resp = functions.Response()
             resp.add('user_name', user_name)
-            resp.add('id', uid)
+
             return resp.respond()
         except Exception as e:
             print(e)
