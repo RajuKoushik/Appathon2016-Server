@@ -5,50 +5,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 import json
 from django.views.decorators.csrf import csrf_exempt
-
+rom . import functions
 from .models import *
 
 
-"""
-Login a user
-"""
-@csrf_exempt
-def login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = User.objects.filter(username=username, password=password)
-        if len(user) == 1:
-            resp = functions.Response()
-            cuser = user[0]
-            resp.add('id', cuser.id)
-            resp.add('firstname', cuser.firstName)
-            resp.add('lastname', cuser.lastName)
-            resp.add('email', cuser.email)
-            resp.add('username', cuser.username)
-            subscriptions = UserSubscription.objects.filter(user=cuser)
-            subs = []
-            for i in subscriptions:
-                d = {}
-                d['subsid'] = i.id
-                d['searchparam'] = i.searchParam
-                d['links'] = []
-                subLinks = SubscriptionLink.objects.filter(userSub=i)
-                for row in subLinks:
-                    d2 = dict()
-                    d2['url'] = row.link.url
-                    d2['name'] = row.link.name
-                    d2['pid'] = row.link.pid
-                    d2['network'] = row.link.network
-                    d['links'].append(d2)
-                subs.append(d)
 
-            resp.add('subscriptions', subs)
-            return resp.respond()
-        else:
-            return functions.auth_failed()
-    else:
-        return functions.invalid_option()
 
 
 """
@@ -57,18 +18,19 @@ Registers a user
 @csrf_exempt
 def register(request):
     if request.method == 'POST':
-        username = request.POST.get('username') # None default if no second param
+        user_name = request.POST.get('user_name') # None default if no second param
         password = request.POST.get('password')
         email = request.POST.get('email')
-        firstName = request.POST.get('firstname')
-        lastName = request.POST.get('lastname')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        age = request.POST.get('age')
         try:
-            user = User(username = username, password = password, email=email,
-                    firstName = firstName, lastName = lastName)
+            user = User(user_name = user_name, password = password, email=email,
+                    first_name = first_name, last_name = last_name)
             user.save()
             uid = user.id
             resp = functions.Response()
-            resp.add('username', username)
+            resp.add('user_name', user_name)
             resp.add('id', uid)
             return resp.respond()
         except Exception as e:
