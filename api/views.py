@@ -112,7 +112,9 @@ def addpost(request):
         except Exception as e:
             print(e)
             return functions.user_exists()
-        else:
-            return functions.invalid_option()
+    else:
+        return functions.invalid_option()
+
+
 
 
