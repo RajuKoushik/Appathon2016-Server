@@ -115,6 +115,42 @@ def addpost(request):
     else:
         return functions.invalid_option()
 
+def wep(request):
+    if request.method == 'POST':
+        user_name = request.POST.get('user_name')
+        password = request.POST.get('password')
+        user = User.objects.filter(user_name=user_name, password=password)
+        if len(user) == 1:
+            resp = functions.Response()
+            cuser = user[0]
+
+            resp.add('firstname', cuser.first_name)
+            resp.add('lastname', cuser.last_name)
+            resp.add('email', cuser.email)
+            resp.add('user_name', cuser.user_name)
+            posts = Post.objects.all()
+            postitles = []
+            posttexts = []
+            postvotes = []
+
+            counter = 0
+            for i in posts:
+                postitles[counter] = i.post_name
+                posttexts[counter] = i.post_text
+                postvotes[counter] = i.post_votes
+                counter = counter + 1
+            resp.add('posttitles', postitles)
+            resp.add('postexts', posttexts)
+            resp.add('postvotes', postvotes)
+            return resp.respond()
+
+        else:
+            return functions.auth_failed()
+    else:
+        return functions.invalid_option()
+
+
+
 
 
 
