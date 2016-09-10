@@ -3,11 +3,11 @@ from django.db import models
 # Create your models here.
 class User(models.Model):
     user_name = models.CharField(max_length=20)
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
-    age = models.PositiveIntegerField(default=0)
-    email = models.EmailField()
-    password = models.CharField(max_length=200)
+    first_name = models.CharField(max_length=20,null=False)
+    last_name = models.CharField(max_length=20,null=False)
+    age = models.PositiveIntegerField(default=0,null=False)
+    email = models.EmailField(null=False)
+    password = models.CharField(max_length=200,null=False)
     join_date = models.DateTimeField('Join Date')
 
 
