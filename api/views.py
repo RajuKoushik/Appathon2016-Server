@@ -49,16 +49,17 @@ def register(request):
         if request.method == 'POST':
             user_name = request.POST.get('user_name')
             password = request.POST.get('password')
-            user = User.objects.filter(username=user_name, password=password)
+            user = User.objects.filter(user_name=user_name, password=password)
             if len(user) == 1:
                 resp = functions.Response()
                 cuser = user[0]
-                resp.add('id', cuser.id)
-                resp.add('firstname', cuser.firstName)
-                resp.add('lastname', cuser.lastName)
+
+
+                resp.add('firstname', cuser.first_name)
+                resp.add('lastname', cuser.last_name)
                 resp.add('email', cuser.email)
-                resp.add('username', cuser.username)
-                posts = Post.objects.filter(user=cuser)
+                resp.add('user_name', cuser.user_name)
+                posts = Post.objects.filter(user_id=cuser)
                 postitles = []
                 posttexts = []
                 postvotes = []
@@ -68,6 +69,7 @@ def register(request):
                     postitles[counter] = i.post_name
                     posttexts[counter] = i.post_text
                     postvotes[counter] = i.post_votes
+                    counter = counter + 1
                 resp.add('posttitles',postitles)
                 resp.add('postexts',posttexts)
                 resp.add('postvotes',postvotes)
