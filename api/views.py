@@ -97,16 +97,20 @@ def addpost(request):
             postitles = []
             posttexts = []
             postvotes = []
+            postuids = []
 
             counter = 0
             for i in posts:
                 postitles[counter] = i.post_name
                 posttexts[counter] = i.post_text
                 postvotes[counter] = i.post_votes
+                postuids[counter] = i.user_id.user_name
+
                 counter = counter + 1
             resp.add('posttitles', postitles)
             resp.add('postexts', posttexts)
             resp.add('postvotes', postvotes)
+            resp.add('postuids',postuids)
 
             return resp.respond()
         except Exception as e:
@@ -131,16 +135,18 @@ def catpost(request):
         postitles = []
         posttexts = []
         postvotes = []
-
+        postuids = []
         counter = 0
         for i in post:
             postitles[counter] = i.post_name
             posttexts[counter] = i.post_text
             postvotes[counter] = i.post_votes
+            postuids[counter] = i.user_id.user_name
             counter = counter + 1
         resp.add('posttitles', postitles)
         resp.add('postexts', posttexts)
         resp.add('postvotes', postvotes)
+        resp.add('postuids',postuids)
         return resp.respond()
     else:
         return functions.invalid_option()
