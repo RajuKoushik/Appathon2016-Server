@@ -12,7 +12,7 @@ class User(models.Model):
 
 
     def __str__(self):
-        return self.nick_name
+        return self.user_name
         # adding a custom database
 
 class Post(models.Model):
