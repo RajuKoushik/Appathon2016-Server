@@ -4,7 +4,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from . import functions
 from .models import *
-from . import feeds
+
 
 """
 Gets the Main feed for an user

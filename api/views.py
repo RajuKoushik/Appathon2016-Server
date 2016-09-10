@@ -26,7 +26,7 @@ def register(request):
         age = request.POST.get('age')
         try:
             user = User(user_name = user_name, password = password, email=email,
-                    first_name = first_name, last_name = last_name)
+                    first_name = first_name, last_name = last_name, age = age)
             user.save()
             uid = user.id
             resp = functions.Response()
